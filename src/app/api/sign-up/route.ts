@@ -19,7 +19,7 @@ export async function POST(req:NextRequest, res:NextResponse){
 
         const verifyCode = Math.floor(100000 + Math.random()*900000).toString()
 
-        const exstingUserByEmail = await UserModel.findOne({email: email})
+        const exstingUserByEmail = await UserModel.findOne({email})
         if(exstingUserByEmail){ 
             if(exstingUserByEmail.isVerified){
                 return Response.json(
@@ -32,6 +32,7 @@ export async function POST(req:NextRequest, res:NextResponse){
                 exstingUserByEmail.password = hashedPassword;
                 exstingUserByEmail.verifyCode = verifyCode;
                 exstingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 60*60*1000);
+                await exstingUserByEmail.save();
             }
 
         }else{
@@ -54,6 +55,8 @@ export async function POST(req:NextRequest, res:NextResponse){
 
         //sendVerification email
         const emailResponse = await sendVerificationEmail(email, username, verifyCode);
+        // console.log(emailResponse);
+
         if(!emailResponse.success){
             return Response.json({
                 success:false,
