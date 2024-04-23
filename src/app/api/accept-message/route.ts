@@ -68,7 +68,7 @@ export async function GET(request : Request) {
     const userId = user._id;
 
     try {
-        const foundUser = await  UserModel.findById(userId).select("-password");
+        const foundUser = await UserModel.findById(userId).select("-password");
         if (!foundUser) {
             return NextResponse.json({
                 success: false,
