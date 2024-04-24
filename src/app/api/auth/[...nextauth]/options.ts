@@ -4,7 +4,6 @@ import { dbConnect } from "@/lib/dbConnect";
 import UserModel from "@/model/user.model";
 import bcrypt from 'bcryptjs';
 
-
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
@@ -21,12 +20,11 @@ export const authOptions: NextAuthOptions = {
                 try {
                     const user = await UserModel.findOne({
                         $or:[
-                            // {email: credentials.identifier},
-                            {email: credentials.email},
-                            {username: credentials.username},
+                            {email: credentials.identifier},
+                            {username: credentials.identifier},
                         ]
                     });
-
+                    // console.log('user', user)
                     if(!user){
                         throw new Error("User not Found!")
                     }
@@ -54,30 +52,25 @@ export const authOptions: NextAuthOptions = {
                 token._id = user._id?.toString();
                 token.isVerified = user.isVerified;
                 token.username = user.username;
-                token.isAcceptingMessages = user.isAcceptingMessages;
+                token.isAcceptingMessage = user.isAcceptingMessage;
             }
-
             return token;
         },
         async session({ session, token }) {
-
             if(token){
                 session.user._id = token._id?.toString();
                 session.user.isVerified = token.isVerified;
                 session.user.username = token.username;
-                session.user.isAcceptingMessages = token.isAcceptingMessages;
-            
+                session.user.isAcceptingMessage = token.isAcceptingMessage;
             }
-
             return session;
         },
-    },
-    pages: {
-        signIn:'/sign-in',
     },
     session:{
         strategy: 'jwt'
     },
     secret: process.env.NEXT_AUTH_SECRET,
-
+    pages: {
+        signIn:'/sign-in',
+    },
 }

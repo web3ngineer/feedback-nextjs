@@ -13,7 +13,7 @@ export async function POST(req:NextRequest, res:NextResponse){
         if (existingUserVerifiedByUsername){
             return Response.json({
                 success:false,
-                message: `The username ${username} has already been taken.`
+                message: `This ${username} username has already been taken.`
             },{status:400})
         };
 
@@ -55,7 +55,7 @@ export async function POST(req:NextRequest, res:NextResponse){
 
         //sendVerification email
         const emailResponse = await sendVerificationEmail(email, username, verifyCode);
-        // console.log(emailResponse);
+        console.log(emailResponse);
 
         if(!emailResponse.success){
             return Response.json({
@@ -82,5 +82,4 @@ export async function POST(req:NextRequest, res:NextResponse){
             }
         )
     }
-
 }

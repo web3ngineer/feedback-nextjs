@@ -27,9 +27,9 @@ const SignUpPage = () => {
   const debounced = useDebounceCallback(setUsername,500)
 
   //zod implementation  for form validation
-  type UserFormData = z.infer<typeof signUpSchema>;
+  type SignUpFormData = z.infer<typeof signUpSchema>;
 
-  const form = useForm<UserFormData>({
+  const form = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       username:'',
@@ -58,8 +58,8 @@ const SignUpPage = () => {
     checkUsernameUnique()
   },[username])
 
-  const onSubmit = async (data: UserFormData) => {
-    console.log(data)
+  const onSubmit = async (data: SignUpFormData) => {
+    // console.log(data)
     setIsSubmitting(true)
     try {
       const response = await axios.post('/api/sign-up', data)
@@ -152,15 +152,15 @@ const SignUpPage = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting} className="w-full">
               {
                 isSubmitting ? (
-                  <>
-                    <div className="flex justify-center">
-                      Loading...
+                  <div className="flex gap-1">
+                    <div className="flex justify-center items-center">
                       <Loader2 className="h-4 w-4 animate-spin"/>
                     </div>
-                  </>
+                    {'loading...'}
+                  </div>
                 ) : ('Signup')
               }
             </Button>

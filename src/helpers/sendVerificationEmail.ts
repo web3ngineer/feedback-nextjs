@@ -9,16 +9,24 @@ export async function sendVerificationEmail(
     verifyCode:string,
 ):Promise<ApiResponse> {
     try {
-        await resend.emails.send({
-            from: 'onboarding@resend.dev',
+        const response = await resend.emails.send({
+            from: 'mail@web3ngineer.in',
             to: email,
             subject: "Feedback Message | Verification Code",
             react: VerificationEmail({username, otp:verifyCode}),
           });
-        
+        // console.log(response)
+
+        if(response.data == null){
+            return {
+                success: false,
+                message:"email server error. Please try again."
+            }
+        }
+
         return {
             success: true,
-            message:"Verification email send successfully"
+            message:"Verification code send successfully"
         }
         
     } catch (emailError) {
