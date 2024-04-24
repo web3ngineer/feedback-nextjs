@@ -1,8 +1,6 @@
 import { dbConnect } from "@/lib/dbConnect";
 import { z } from 'zod';
 import UserModel from "@/model/user.model";
-import { usernameValidation } from "@/Schemas/signUpSchema";
-
 
 export async function POST(request: Request){
     await dbConnect()
@@ -10,8 +8,9 @@ export async function POST(request: Request){
     try {
         const { username, code } = await request.json()
 
-        const decodedUsername = decodeURIComponent(username) // To handle URL encoded characters in the username
+        const decodedUsername = decodeURIComponent(username)// To handle URL encoded characters in the username
         const user = await UserModel.findOne({username:decodedUsername})
+        // console.log(user)
 
         if(!user){
             return Response.json({
@@ -20,8 +19,16 @@ export async function POST(request: Request){
             },{status:400})
         }
 
-        const isCodeValid = await user.verifyCode === code ; 
-        const isCodeNotExpired = await user.verifyCodeExpiry > new Date();
+        if(user.isVerified){
+            return Response.json({
+                success: true,
+                message: "Already User Verified"
+            },{status:200})
+        }
+
+        const isCodeValid = user.verifyCode === code ; 
+        const isCodeNotExpired = user.verifyCodeExpiry > new Date();
+        
         if(!isCodeValid){
             return Response.json({
                 success: false,
@@ -37,8 +44,25 @@ export async function POST(request: Request){
         }
 
         if(isCodeValid && isCodeNotExpired){
-            user.isVerified=true;
-            await user.save()
+            // user.isVerified=true;
+            // user.verifyCode+undefined;
+            // user.verifyCodeExpiry=undefined;
+            // await user.save()
+
+            const response = await UserModel.findOneAndUpdate(
+                { username },
+                { 
+                    $unset: { 
+                        verifyCode:"",
+                        verifyCodeExpiry:"",
+                    },
+                    $set:{
+                        isVerified:true
+                    },
+                },
+                { new: true }
+            );
+            // console.log(response)
 
             return Response.json({
                 success: true,
