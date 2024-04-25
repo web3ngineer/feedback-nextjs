@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { kv } from "@vercel/kv";
 
@@ -31,10 +32,8 @@ export default async function handler(request: NextRequest){
                 }
             }
         ) 
-    }else{
-
     }
-
+    return NextResponse.next()
 }
 
 
