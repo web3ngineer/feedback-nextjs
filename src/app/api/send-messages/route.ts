@@ -4,11 +4,11 @@ import { NextResponse } from "next/server";
 import { Message } from "@/model/user.model";
 
 export async function POST(request: Request){
-    dbConnect();
 
+    dbConnect();
     const {username, content} = await request.json()
     try {
-        const user = await UserModel.findOne({username}).exec()
+        const user = await UserModel.findOne({username})
         if(!user){
             return NextResponse.json({
                 success:false,

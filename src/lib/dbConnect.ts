@@ -8,7 +8,6 @@ const connection: ConnectionObject = {}
 
 export async function dbConnect(): Promise<void> {
     // If already connected, return early
-    console
     if (connection.isConnected){
         console.log('Already connected to MongoDB');
         return;

@@ -1,5 +1,4 @@
 import { resend } from "@/lib/resend";
-import { NextApiRequest, NextApiResponse } from "next";
 import VerificationEmail from "../../emails/verificationEmail";
 import { ApiResponse } from "@/types/ApiResponse";
 

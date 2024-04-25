@@ -1,14 +1,18 @@
-import type { Metadata } from "next";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/context/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
 import Head from "next/head";
+import { Metadata } from "next/types";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Lukka Chhupi",
+  title:{
+    default:"Lukka Chhupi",
+    template: "%s",
+  },
   description: "An anonymous feedback/suggestion giving platform ",
   icons:{
     icon:[

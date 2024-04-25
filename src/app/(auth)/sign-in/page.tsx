@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import { signInSchema } from '@/Schemas/signInSchema';
 
+
 export default function SignInForm() {
   const router = useRouter();
   const { toast } = useToast();
@@ -64,7 +65,7 @@ export default function SignInForm() {
       router.replace('/dashboard');
     }
   };
-  
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
