@@ -56,7 +56,6 @@ const userSchema: Schema<User> = new Schema({
     messages:[messageSchema],
     verifyCode:String,
     verifyCodeExpiry:Date,
-    
 });
 
 const UserModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User",userSchema);
