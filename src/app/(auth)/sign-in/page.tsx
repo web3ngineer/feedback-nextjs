@@ -22,7 +22,9 @@ export default function SignInForm() {
   const router = useRouter();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof signInSchema>>({
+  type SignInFormData = z.infer<typeof signInSchema>
+
+  const form = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       identifier: '',
@@ -30,16 +32,15 @@ export default function SignInForm() {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof signInSchema>) => {
+  const onSubmit = async (data: SignInFormData) => {
     const result = await signIn('credentials', {
       redirect: false,
       identifier: data.identifier,
       password: data.password,
     });
-    // console.log('result',result)
 
-    if (result?.error) {
-      if (result.error === 'CredentialsSignin') {
+    if (result?.error){
+      if (result.error === 'CredentialsSignin'){
         toast({
           title: 'Login Failed',
           description: 'Incorrect username or password',

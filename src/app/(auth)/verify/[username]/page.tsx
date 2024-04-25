@@ -83,11 +83,11 @@ function VerifyAccount() {
             name="code"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Code</FormLabel>
+                <FormLabel>Verification Code</FormLabel>
                 <FormControl>
                   <Input 
                     {...field} 
-                    placeholder="Verify Code"
+                    placeholder="Code"
                   />
                 </FormControl>
                 <FormMessage/>
