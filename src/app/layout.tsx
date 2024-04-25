@@ -11,8 +11,17 @@ export const metadata: Metadata = {
   title: "Lukka Chhupi",
   description: "An anonymous feedback/suggestion giving platform ",
   icons:{
-    icon:"./favicon.ico",
+    icon:[
+      '/public/favicon.ico?v=1',
+    ],
+    apple:[
+      '/public/apple-touch-icon.png?v=4',
+    ],
+    shortcut:[
+      '/public/apple-touch-icon.png?v=4', // for iOS <  12.3; safari on iOS should get this if they
+    ],
   },
+  manifest:'/public/site.webmanifest'
 };
 
 export default function RootLayout({
