@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import { Ratelimit } from "@upstash/ratelimit";
-import { kv } from "@vercel/kv";
+import { runtime } from './app/api/suggest-messages/route';
 
 export const config = {
     matcher: [
@@ -12,37 +11,6 @@ export const config = {
         '/dashboard/:path*',
         '/verify/:path*',
     ],
-}
-
-const ratelimit = new Ratelimit({
-    redis: kv,
-    limiter: Ratelimit.slidingWindow(5, '10s'),
-})
-
-// Define custom middleware function
-export async function rateLimitMiddleware(request: NextRequest) {
-    const ip = request.ip ?? '127.0.0.1';
-
-    const limitResponse = await ratelimit.limit(ip);
-
-    if (limitResponse.remaining === 0){
-        return NextResponse.json(
-            {
-                success: false,
-                message: "Rate limit exceeds. Too many requests sent"
-            },
-            {
-                status: 429,
-                headers: {
-                    'X-RateLimit-Limit': limitResponse.limit.toString(),
-                    'X-RateLimit-Remaining': limitResponse.remaining.toString(),
-                    'X-RateLimit-Reset': limitResponse.reset.toString(),
-                }
-            }
-        );
-    }
-    // Proceed to the next middleware or endpoint handler
-    return NextResponse.next();
 }
 
 // This function can be marked `async` if using `await` inside
