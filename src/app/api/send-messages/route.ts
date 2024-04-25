@@ -1,11 +1,14 @@
 import { dbConnect } from "@/lib/dbConnect";
 import UserModel from "@/model/user.model";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Message } from "@/model/user.model";
+import { rateLimitMiddleware } from "@/middleware";
 
-export async function POST(request: Request){
+export async function POST(request: NextRequest){
 
     dbConnect();
+    rateLimitMiddleware(request)
+
     const {username, content} = await request.json()
     try {
         const user = await UserModel.findOne({username})
