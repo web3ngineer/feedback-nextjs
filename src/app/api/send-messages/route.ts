@@ -5,8 +5,7 @@ import { Message } from "@/model/user.model";
 import { rateLimiter } from "@/lib/rateLimiter";
 
 export async function POST(request: NextRequest){
-
-    dbConnect();
+    
     const limitResponse = await rateLimiter(request)
     console.log(limitResponse.remaining);
     if(limitResponse.remaining === 0){
@@ -26,6 +25,8 @@ export async function POST(request: NextRequest){
             }
         );
     }
+
+    dbConnect();
 
     const {username, content} = await request.json()
     try {

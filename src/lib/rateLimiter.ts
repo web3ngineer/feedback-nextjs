@@ -11,8 +11,7 @@ export const config ={
 }
 
 export async function rateLimiter(request: NextRequest){
-    const ip = request.ip ?? '127.0.0.1';
-    // console.log(ip)
+    const ip = await request.ip ?? '127.0.0.1';
     const limitResponse = await ratelimit.limit(ip);
     return limitResponse;
 }
