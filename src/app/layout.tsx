@@ -10,11 +10,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Lukka Chhupi",
   description: "An anonymous feedback/suggestion giving platform ",
+  icons:{
+    icon:"./favicon.ico",
+  },
 };
-
-export const icon:Metadata={
-  
-}
 
 export default function RootLayout({
   children,
