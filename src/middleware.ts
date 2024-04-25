@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-export { default } from "next-auth/middleware";
+// export { default } from "next-auth/middleware";
 import { getToken } from 'next-auth/jwt';
 
+import { Ratelimit } from "@upstash/ratelimit";
+import { kv } from "@vercel/kv";
 
 export const config = {
     matcher: [
@@ -12,6 +14,37 @@ export const config = {
         '/dashboard/:path*',
         '/verify/:path*',
     ],
+    runtime:"edge"
+}
+
+const ratelimit = new Ratelimit({
+    redis: kv,
+    limiter: Ratelimit.slidingWindow(5, '10s'),
+})
+
+
+export default async function handler(request: NextRequest){
+
+    const ip = request.ip ?? '127.0.0.1'
+
+    const limitResponse = await ratelimit.limit(ip)
+    if(!limitResponse.remaining){
+        return Response.json(
+            {
+                success: false,
+                message: "Rate limit exceeds. Too many requests send"
+            },
+            {
+                status:429,
+                headers:{
+                    'X-RateLimit-Limit': limitResponse.limit.toString(),
+                    'X-RateLimit-Remaining': limitResponse.remaining.toString(),
+                    'X-RateLimit-Reset': limitResponse.reset.toString(),
+                }
+            }
+        ) 
+    }
+    return NextResponse.next()
 }
 
 // This function can be marked `async` if using `await` inside
@@ -34,7 +67,6 @@ export async function middleware(request: NextRequest) {
     if(!token && url.pathname.startsWith('/dashboard')){
         return NextResponse.redirect(new URL( "/sign-in", request.url))
     }
-    
-    // return NextResponse.next()
+    return NextResponse.next()
     // return NextResponse.redirect(new URL('/home', request.url))
 }
