@@ -14,7 +14,7 @@ export const config = {
         '/dashboard/:path*',
         '/verify/:path*',
     ],
-    runtime:"edge"
+    runtime: 'edge',
 }
 
 const ratelimit = new Ratelimit({
