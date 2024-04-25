@@ -25,7 +25,7 @@ export async function rateLimitMiddleware(request: NextRequest) {
 
     const limitResponse = await ratelimit.limit(ip);
 
-    if (!limitResponse.remaining) {
+    if (limitResponse.remaining === 0){
         return NextResponse.json(
             {
                 success: false,
