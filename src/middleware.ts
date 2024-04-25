@@ -23,7 +23,8 @@ const ratelimit = new Ratelimit({
 })
 
 
-export default async function handler(request: NextRequest){
+// This function can be marked `async` if using `await` inside
+export async function middleware(request: NextRequest) {
 
     const ip = request.ip ?? '127.0.0.1'
 
@@ -44,11 +45,6 @@ export default async function handler(request: NextRequest){
             }
         ) 
     }
-    return NextResponse.next()
-}
-
-// This function can be marked `async` if using `await` inside
-export async function middleware(request: NextRequest) {
 
     const token = await getToken({req:request, secret:process.env.NEXT_AUTH_SECRET}) // Get the user's JWT token from the cookie.
     // console.log(token)
