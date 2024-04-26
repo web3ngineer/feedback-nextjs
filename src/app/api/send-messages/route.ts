@@ -7,10 +7,11 @@ import { rateLimiter } from "@/lib/rateLimiter";
 export async function POST(request: NextRequest){
     
     const limitResponse = await rateLimiter(request)
-    console.log(limitResponse.remaining);
+    // console.log(limitResponse.remaining);
     if(limitResponse.remaining === 0){
         // console.log("ok")
-        return Response.json(
+        const reset = (limitResponse.reset - Date.now())/1000
+        return Response.json( 
             {
                 success: false,
                 message: "Rate limit exceeds. Too many requests sent"
@@ -20,7 +21,7 @@ export async function POST(request: NextRequest){
                 headers: {
                     'X-RateLimit-Limit': limitResponse.limit.toString(),
                     'X-RateLimit-Remaining': limitResponse.remaining.toString(),
-                    'X-RateLimit-Reset': limitResponse.reset.toString(),
+                    'X-RateLimit-Reset': `${reset}s`,
                 }
             }
         );

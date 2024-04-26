@@ -5,6 +5,7 @@ import AuthProvider from "@/context/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
 import Head from "next/head";
 import { Metadata } from "next/types";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -40,6 +41,7 @@ export default function RootLayout({
       </Head>
       <body className={inter.className}>
         <AuthProvider>
+          <Navbar/>
           {children}
           <Toaster/>
         </AuthProvider>
