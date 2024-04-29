@@ -4,16 +4,21 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Link from "next/link";
-import { useDebounceCallback, useDebounceValue } from 'usehooks-ts'
+import { useDebounceCallback } from 'usehooks-ts'
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { signUpSchema } from "@/Schemas/signUpSchema";
 import axios, { AxiosError } from 'axios';
 import { ApiResponse } from "@/types/ApiResponse";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import { signIn, useSession } from 'next-auth/react';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import Image from 'next/image';
+import googleIcon from '../../../../public/assets/icons8-google.svg';
+import githubIcon from '../../../../public/assets/icons8-github.svg';
 
 const SignUpPage = () => {
 
@@ -166,6 +171,32 @@ const SignUpPage = () => {
             </Button>
           </form>
         </Form>
+        <div className='mt-6 flex flex-col justify-center items-center'>
+            <p className='p-2 -m-5 bg-white w-8 z-10 text-gray-500'>or</p>
+            <Separator/>
+        </div>
+        <div className='grid md:grid-cols-2 gap-y-3 justify-center items-center md:gap-x-3'>
+          <Button 
+            type='button' 
+            onClick={async() => await signIn('google', {redirect:false})} 
+            className='bg-white rounded-lg shadow-md hover:bg-white hover:shadow-xl text-black p-2'
+          >
+            <div className='flex items-center gap-2'>
+              <Image src={googleIcon} alt="Google" width={25} height={25}/>
+              <p className='font-normal'>Sign up with Google</p>
+            </div>
+          </Button>
+          <Button 
+            type='button' 
+            onClick={async() => await signIn('github', {redirect:false})} 
+            className='bg-white rounded-lg shadow-md hover:bg-white hover:shadow-xl text-black p-2'
+          >
+            <div className='flex items-center gap-2'>
+              <Image src={githubIcon} alt="Google" width={25} height={25}/>
+              <p className='font-normal'>Sign up with GitHub</p>
+            </div>
+          </Button>
+        </div>
         <div className="text-center mt-4">
           <p>
             Already have an account?{' '}

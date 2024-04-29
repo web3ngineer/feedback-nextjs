@@ -1,12 +1,14 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/options";
+import { authOptions } from "../../auth/[...nextauth]/options";
 import { dbConnect } from "@/lib/dbConnect";
 import UserModel from "@/model/user.model";
 import { User } from "next-auth";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 
-export async function GET(request: Request){
+export async function DELETE(request: Request, {params}:{ params:{messageid:string}}) {
+
+    const messageId = params.messageid;
     await dbConnect();
 
     const session = await getServerSession(authOptions)
@@ -19,33 +21,28 @@ export async function GET(request: Request){
         },{status:401})
     }
 
-    const userId = new mongoose.Types.ObjectId(user._id);
-    // in aggregation we need to pass the object id not the string
     try {
-        const user = await UserModel.aggregate([
-            {$match:{id: userId}},
-            {$unwind:'$messages'},
-            {$sort:{'messages.createdAt':-1}},
-            {$group:{_id:'$_id', messages:{$push:'$messages'}}}
-        ])
+        const updatedResult = await UserModel.updateOne(
+            {_id: user._id},
+            {$pull: {messages: {_id: messageId}}}
+        )
 
-        if(!user || user.length === 0){
+        if(updatedResult.modifiedCount == 0 ){
             return NextResponse.json({
                 success:false,
-                message:"User not found"
+                message:"Message not found or deleted"
             },{status:401})
         }
         return NextResponse.json({
             success:true,
-            message:"User data fetched successfully",
-            data:user[0].messages
+            message:"Message updated successfully",
         },{status:201})
 
     } catch (error: any){
         console.log(error.message)
         return NextResponse.json({
             success:false,
-            message:"User not  found or server error :" + error.message
+            message:"Message delete error :" + error.message,
         },{status:500})
     }
 }

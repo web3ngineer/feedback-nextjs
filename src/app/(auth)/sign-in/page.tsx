@@ -13,10 +13,14 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import { signInSchema } from '@/Schemas/signInSchema';
+import Image from 'next/image';
+import googleIcon from '../../../../public/assets/icons8-google.svg';
+import githubIcon from '../../../../public/assets/icons8-github.svg';
 
 
 export default function SignInForm() {
@@ -102,6 +106,32 @@ export default function SignInForm() {
             <Button className='w-full' type="submit">Sign In</Button>
           </form>
         </Form>
+        <div className='mt-6 flex flex-col justify-center items-center'>
+            <p className='px-2 -m-3 bg-white w-8 z-10 text-gray-500'>or</p>
+            <Separator/>
+        </div>
+        <div className='grid md:grid-cols-2 gap-y-3 justify-center items-center md:gap-x-3'>
+          <Button 
+            type='button' 
+            onClick={async() => await signIn('google', {redirect:false})} 
+            className='bg-white rounded-lg shadow-md hover:bg-white hover:shadow-xl text-black p-2'
+          >
+            <div className='flex items-center gap-2'>
+              <Image src={googleIcon} alt="Google" width={25} height={25}/>
+              <p className='font-normal'>Sign in with Google</p>
+            </div>
+          </Button>
+          <Button 
+            type='button' 
+            onClick={async() => await signIn('github', {redirect:false})} 
+            className='bg-white rounded-lg shadow-md hover:bg-white hover:shadow-xl text-black p-2'
+          >
+            <div className='flex items-center gap-2'>
+              <Image src={githubIcon} alt="Google" width={25} height={25}/>
+              <p className='font-normal'>Sign in with GitHub</p>
+            </div>
+          </Button>
+        </div>
         <div className="text-center mt-4">
           <p>
             Not a member yet?{' '}
