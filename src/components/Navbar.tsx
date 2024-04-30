@@ -19,7 +19,7 @@ const Navbar = () => {
             <a href="/">
                 <div className='flex'>
                         <Image src={Logo} alt="Logo" width={45} height={45}/>
-                        <p className='flex justify-center items-center p-2 text-xl tracking-tight text-purple-800 font-serif font-bold'>Lukka Chhupi</p>
+                        <p className='flex justify-center items-center p-2 text-xl tracking-tight text-purple-800 font-serif font-bold'>Lukka Chhuppi</p>
                 </div>
             </a>
             {
