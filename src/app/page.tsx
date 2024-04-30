@@ -37,7 +37,7 @@ export default function Home() {
         >
           <CarouselContent>
             {messages.map((message, index) => (
-              <CarouselItem key={index} className="p-4">
+              <CarouselItem key={index} className="p-4 pl-8">
                 <Card>
                   <CardHeader>
                     <CardTitle>{message.title}</CardTitle>
