@@ -175,7 +175,7 @@ const SignUpPage = () => {
             <p className='p-2 -m-5 bg-white w-8 z-10 text-gray-500'>or</p>
             <Separator/>
         </div>
-        <div className='grid md:grid-cols-2 gap-y-3 justify-center items-center md:gap-x-3'>
+        <div className='grid sm:grid-cols-2 gap-y-3 justify-center items-center sm:gap-x-3'>
           <Button 
             type='button' 
             onClick={async() => await signIn('google', {redirect:false})} 

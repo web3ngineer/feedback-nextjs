@@ -11,6 +11,7 @@ export async function GET(request: Request){
 
     const session = await getServerSession(authOptions)
     const user = session?.user as User
+    // console.log(user)
 
     if(!session || !session.user){
         return NextResponse.json({
@@ -23,29 +24,30 @@ export async function GET(request: Request){
     // in aggregation we need to pass the object id not the string
     try {
         const user = await UserModel.aggregate([
-            {$match:{id: userId}},
+            {$match:{_id: userId}},
             {$unwind:'$messages'},
             {$sort:{'messages.createdAt':-1}},
             {$group:{_id:'$_id', messages:{$push:'$messages'}}}
-        ])
+        ]).exec()
+        // console.log(user)
 
         if(!user || user.length === 0){
             return NextResponse.json({
                 success:false,
-                message:"User not found"
+                message:"There is no message"
             },{status:401})
         }
         return NextResponse.json({
             success:true,
             message:"User data fetched successfully",
-            data:user[0].messages
+            messages:user[0].messages
         },{status:201})
 
     } catch (error: any){
         console.log(error.message)
         return NextResponse.json({
             success:false,
-            message:"User not  found or server error :" + error.message
+            message:"User not found or server error :" + error.message
         },{status:500})
     }
 }

@@ -38,7 +38,7 @@ export async function POST(request: Request) {
         return  NextResponse.json({
             success: true,
             message: "Message acceptance status updated successfully",
-            date: updatedUser
+            data:updatedUser
         },{status:200})
 
     } catch (error:any) {
@@ -78,7 +78,7 @@ export async function GET(request : Request) {
     
         return NextResponse.json({
             success: false,
-            isAcceptingMessages:foundUser.isAcceptingMessage,
+            isAcceptingMessage:foundUser.isAcceptingMessage,
             data:foundUser
         },{status:200});
         

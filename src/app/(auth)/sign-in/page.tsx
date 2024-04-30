@@ -110,7 +110,7 @@ export default function SignInForm() {
             <p className='px-2 -m-3 bg-white w-8 z-10 text-gray-500'>or</p>
             <Separator/>
         </div>
-        <div className='grid md:grid-cols-2 gap-y-3 justify-center items-center md:gap-x-3'>
+        <div className='grid sm:grid-cols-2 gap-y-3 justify-center items-center sm:gap-x-3'>
           <Button 
             type='button' 
             onClick={async() => await signIn('google', {redirect:false})} 
@@ -126,7 +126,7 @@ export default function SignInForm() {
             onClick={async() => await signIn('github', {redirect:false})} 
             className='bg-white rounded-lg shadow-md hover:bg-white hover:shadow-xl text-black p-2'
           >
-            <div className='flex items-center gap-2'>
+            <div className='flex items-center gap-2 w-full'>
               <Image src={githubIcon} alt="Google" width={25} height={25}/>
               <p className='font-normal'>Sign in with GitHub</p>
             </div>
