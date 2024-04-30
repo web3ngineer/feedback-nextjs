@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { User, Session } from 'next-auth'
 import { Button } from './ui/button'
+import Image from 'next/image'
+import Logo from '../../public/android-chrome-512x512.png'
 
 const Navbar = () => {
     const { data: session } = useSession()
@@ -12,9 +14,14 @@ const Navbar = () => {
 
 
   return (
-    <nav className='p-4 md:p-6 shadow-md'>
-        <div className='container mx-auto flex flex-col md:flex-row justify-between items-center'>
-            <a href="#">Lukka Chhuppi</a>
+    <nav className='p-2 md:p-3 shadow-md'>
+        <div className='container mx-auto flex flex-col gap-2 md:flex-row justify-between items-center'>
+            <a href="/">
+                <div className='flex'>
+                        <Image src={Logo} alt="Logo" width={45} height={45}/>
+                        <p className='flex justify-center items-center p-2 text-xl tracking-tight text-purple-800 font-serif font-bold'>Lukka Chhupi</p>
+                </div>
+            </a>
             {
                 session ? (
                     <>
