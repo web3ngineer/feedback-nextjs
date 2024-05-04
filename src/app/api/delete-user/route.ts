@@ -10,6 +10,7 @@ export async function DELETE(request: Request){
 
     const session = await getServerSession(authOptions)
     const user = session?.user as User
+    // console.log(user)
 
     if(!session || !session.user){
         return NextResponse.json({
@@ -19,11 +20,19 @@ export async function DELETE(request: Request){
     }
     // in aggregation we need to pass the object id not the string
     try {
-        await UserModel.findByIdAndDelete(user._id)
+        const deletedUser= await UserModel.deleteOne({"_id":user._id})
+        console.log(deletedUser)
+        if (!deletedUser.deletedCount){
+            return NextResponse.json({
+                success:false,
+                message:"try again! Profile not deleted ",
+            },{status:401})
+        }
+
         return NextResponse.json({
             success:true,
             message:"User profile deleted successfully",
-        },{status:401})
+        },{status:201})
 
     } catch (error: any){
         console.log(error.message)

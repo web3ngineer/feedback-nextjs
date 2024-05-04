@@ -13,9 +13,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios, {AxiosError} from 'axios';
 import { Loader2, RefreshCcw } from 'lucide-react';
 import { User } from 'next-auth';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { DeleteUser } from './DeleteUser';
 
 function Dashboard() {
 
@@ -110,6 +111,24 @@ function Dashboard() {
     }
   }
 
+  const handleDeleteUserConfirm = async () => {
+    try {
+      const response = await axios.delete<ApiResponse>(`/api/delete-user`);
+      if(response.data.success){
+        toast({
+          title: response.data.message?.toString(),
+        });
+        signOut();
+      }
+    } catch (error:any) {
+      toast({
+        title: 'Error',
+        description:error.response?.data.message ?? 'Failed to delete User',
+        variant: 'destructive',
+      });
+    } 
+  };
+
   if(!session || !session.user){
     return(
       <div className='container'>
@@ -132,9 +151,11 @@ function Dashboard() {
   };
 
   return (
-    <div className="my-8 mr-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
-      <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
-
+    <div className="my-8 mr-4 md:mx-8 lg:mx-auto md:p-6 bg-white rounded w-full max-w-6xl">
+      <div className='flex flex-col gap-2 mb-4 sm:justify-between sm:flex-row'>
+        <h1 className="text-3xl font-bold">User Dashboard</h1>
+        <DeleteUser handleDeleteUser={handleDeleteUserConfirm} />
+      </div>
       <div className="mb-4">
         <h2 className="text-lg font-semibold mb-2">Copy Your Unique Link</h2>{' '}
         <div className="flex items-center">

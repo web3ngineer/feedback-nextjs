@@ -35,7 +35,7 @@ export async function POST(request: Request) {
             }, { status: 401 })
         }
 
-        return  NextResponse.json({
+        return NextResponse.json({
             success: true,
             message: "Message acceptance status updated successfully",
             data:updatedUser

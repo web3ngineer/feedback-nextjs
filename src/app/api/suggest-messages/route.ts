@@ -22,9 +22,11 @@ export async function POST(req: Request) {
       stream: true,
       prompt,
     });
+    console.log(response);
    
     // Convert the response into a friendly text-stream
     const stream = OpenAIStream(response);
+    console.log(stream)
     // Respond with the stream
     return new StreamingTextResponse(stream);
   } catch (error) {

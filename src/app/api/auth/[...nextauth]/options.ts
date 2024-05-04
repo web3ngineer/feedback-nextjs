@@ -51,6 +51,7 @@ export const authOptions: NextAuthOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+            
         }),
         GitHubProvider({
             clientId: process.env.GITHUB_CLIENT_ID  as string,
@@ -71,11 +72,11 @@ export const authOptions: NextAuthOptions = {
                 try {
                     const existingUser = await UserModel.findOne({ email: user.email?.toString()});
                     if(existingUser && !existingUser.isVerified){
-                        console.log('existingUser Verification')
+                        // console.log('existingUser Verification')
 
                         existingUser.isVerified=true;
                         const updatedUser = await existingUser.save();
-                        console.log("updatedUsed",updatedUser)
+                        // console.log("updatedUsed",updatedUser)
                         if(user){
                             user._id = updatedUser._id?.toString();
                             user.isVerified = updatedUser.isVerified;
@@ -86,7 +87,7 @@ export const authOptions: NextAuthOptions = {
                         return true;  
 
                     }else if(existingUser && existingUser.isVerified){
-                        console.log('existingUser Verified')
+                        // console.log('existingUser Verified')
                         if(user){
                             user._id = existingUser._id?.toString();
                             user.isVerified = existingUser.isVerified;
@@ -107,7 +108,7 @@ export const authOptions: NextAuthOptions = {
                         });
                         // console.log('newUser', newUser)
                         if(user){
-                            user.id = newUser._id?.toString();
+                            user._id = newUser._id?.toString();
                             user.isVerified = newUser.isVerified;
                             user.username = newUser.username;
                             user.isAcceptingMessage = newUser.isAcceptingMessage;
