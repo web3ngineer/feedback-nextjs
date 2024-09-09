@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation"; // Correct way to access query params in app directory
 import { useRouter } from "next/navigation"; // For navigating programmatically
 import { useToast } from "@/components/ui/use-toast";
@@ -8,7 +8,7 @@ import axios, { AxiosError } from "axios";
 import { ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 
-function VerifyAccount() {
+function VerifyAccountPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -67,30 +67,32 @@ function VerifyAccount() {
     } else {
       router.push("/");
     }
-  }, [username, otp, router]); // Add router and query params to the dependency array
+  }, [username, otp, router]);
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center min-h-screen bg-gray-100">
-      <div className="flex flex-col justify-center items-center bg-white p-6 rounded-lg">
-        <h1 className="text-2xl text-purple-800 font-bold mb-4">Verify Account</h1>
-        {isSubmitting ? (
-          <div className="flex text-gray-400">
-            Verifying Otp... <Loader2 className="animate-spin" />
-          </div>
-        ) : (
-          <p className="text-2xl text-gray-400">{message}</p>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="flex flex-col gap-4 justify-center items-center min-h-screen bg-gray-100">
+        <div className="flex flex-col justify-center items-center bg-white p-6 rounded-lg">
+          <h1 className="text-2xl text-purple-800 font-bold mb-4">Verify Account</h1>
+          {isSubmitting ? (
+            <div className="flex text-gray-400">
+              Verifying Otp... <Loader2 className="animate-spin" />
+            </div>
+          ) : (
+            <p className="text-2xl text-gray-400">{message}</p>
+          )}
+        </div>
+        {message && (
+          <Link
+            href={"/"}
+            className={"bg-white px-2 font-semibold py-1 text-xs rounded-lg"}
+          >
+            goto Home Page →
+          </Link>
         )}
       </div>
-      {message && (
-        <Link
-          href={"/"}
-          className={"bg-white px-2 font-semibold py-1 text-xs rounded-lg"}
-        >
-          goto Home Page →
-        </Link>
-      )}
-    </div>
+    </Suspense>
   );
 }
 
-export default VerifyAccount;
+export default VerifyAccountPage;

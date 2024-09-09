@@ -113,4 +113,4 @@ function VerifyAccount() {
   )
 }
 
-export default VerifyAccount
+export default VerifyAccount;
