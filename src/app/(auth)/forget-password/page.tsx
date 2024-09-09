@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Page() {
+function ForgetPassword() {
   return (
     <div>page</div>
   )
 }
 
-export default Page;
+export default ForgetPassword;
