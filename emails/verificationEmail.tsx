@@ -1,70 +1,139 @@
 import {
-    Html,
-    Head,
-    Font,
-    Preview,
-    Heading,
-    Row,
-    Section,
-    Text,
-    Button,
+  Html,
+  Head,
+  Column,
+  Link,
+  Preview,
+  Img,
+  Row,
+  Section,
+  Text,
+  Button,
+  Tailwind,
+  Container,
+  Body,
+  Hr,
 } from "@react-email/components";
 
-interface VerificationEmailPage{
-    username: string;
-    otp: string;
+interface VerificationEmailPage {
+  username: string;
+  otp: string;
 }
 
-export default function VerificationEmail({username, otp}:VerificationEmailPage) {
-
-    return(
-        <Html lang='en' dir="ltr">
-            <Head>
-                <title>Verification Code</title>
-                <Font
-                    fontFamily="Roboto"
-                    fallbackFontFamily={"Verdana"}
-                    webFont={{
-                        url: "https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
-                        format: "woff2",
-                    }}
-                    fontWeight={400}
-                    fontStyle="normal"
-                />
-            </Head>
-            <Preview>Here&apos;s your Verification code: {otp}</Preview>
+export default function VerificationEmail({
+  username,
+  otp,
+}: VerificationEmailPage) {
+  return (
+    <Tailwind>
+      <Html lang="en" dir="ltr">
+        <Head>
+          <title>Verification Code</title>
+        </Head>
+        <Preview>Here&apos;s your Verification code: {otp}</Preview>
+        <Body>
+          <Container className="text-center">
             <Section>
-                <Row>
-                    <Heading as="h2">Hello {username},</Heading>
-                </Row>
-                <Row>
-                    <Text>
-                        Thank you for registering,. Please use the following verification code to complete your resgistration:
-                    </Text>
-                </Row>
-                <Row>
-                    <Text>{otp}</Text>
-                </Row>
-                <Row>
-                    <Text>
-                        If you did not request this code, please ignore this email.
-                    </Text>
-                </Row>
-                <Row>
-                    <Button
-                        href=""
-                        style={{
-                            color:"#3a8bb8", 
-                            backgroundColor:"#fff",  
-                            textDecoration:"none", 
-                            borderRadius: "6px",
-                            padding:"10px 20px"
-                        }} 
-                    >
-                        Verify here
-                    </Button>
-                </Row>
+              <Row>
+                <Text className="text-[20px]">
+                  Hey <strong className="text-blue-500">{username}</strong>,
+                  Verify your email address
+                </Text>
+              </Row>
+              <Row>
+                <Text>
+                  Thank you for registering at <strong>Lukka Chhuppi</strong>.
+                  Please use the following verification code to complete your
+                  resgistration:
+                </Text>
+              </Row>
+              <Row className="flex flex-col">
+                <Text>
+                  <strong>Here&apos;s your verification code</strong>
+                </Text>
+                <Text className="text-[25px]">
+                  <strong>{otp}</strong>
+                </Text>
+              </Row>
+              <Row>
+                <Button
+                  href={`https://lukka-chhuppi.web3ngineer.in/verify?username=${username}&otp=${otp}`}
+                  className="box-border rounded-[8px] bg-indigo-600 px-[20px] py-[12px] text-center font-semibold text-white"
+                >
+                  Verify here
+                </Button>
+              </Row>
+              <Row>
+                <Text>
+                  If you did not request this code, please ignore this email.
+                </Text>
+              </Row>
+              <Row>
+                <Text className="text-xs">
+                  This message was produced and distributed by{" "}
+                  <Link href="https://lukka-chhuppi.web3ngineer.in">
+                    Lukka Chhuppi
+                  </Link>{" "}
+                  . All rights reserved.{" "}
+                  <Link href="https://web3ngineer.in/">Lukka Chhuppi</Link> is a
+                  registered trademark of{" "}
+                  <Link href="https://web3ngineer.in/">
+                    <strong>Web3ngineer .</strong>
+                  </Link>
+                </Text>
+              </Row>
+              <Hr />
+              <Row>
+                <Text className="text-xs">
+                  © 2024 Lukka Chhuppi. All rights reserved.
+                </Text>
+              </Row>
             </Section>
-        </Html>
-    )
+          </Container>
+        </Body>
+      </Html>
+    </Tailwind>
+  );
+}
+
+{
+  /* <Row>
+                 <Text>Connect with me.</Text>
+              </Row>
+              <Row>
+                <Column>
+                  <Link href="https://github.com/web3ngineer">
+                  <Img
+                      alt="Github"
+                      height="32"
+                      src="/public/logo/icons8-github-32.png"
+                      width="32"
+                    />
+                  </Link>
+                  <Link href="https://twitter.com/web3ngineer">
+                    <Img
+                      alt="X"
+                      height="32"
+                      src="/public/logo/icons8-twitter-32.png"
+                      width="32"
+                    />
+                  </Link>
+                  <Link href="https://www.instagram.com/web3ngineer">
+                    <Img
+                      alt="Instagram"
+                      height="32"
+                      src="/public/logo/icons8-instagram-32.png"
+                      width="32"
+                    />
+                  </Link>
+                  <Link href="https://www.linkedin.com/in/web3ngineer">
+                    <Img
+                      alt="LinkedIn"
+                      height="32"
+                      src="/public/logo/icons8-linked-in-32.png"
+                      width="32"
+                    />
+                  </Link>
+                </Column>
+              </Row> */
 }

@@ -15,14 +15,14 @@ export async function POST(request: Request){
             return Response.json({
                 success: false,
                 message: "User not Found"
-            },{status:400})
+            },{status:404})
         }
 
         if(user.isVerified){
             return Response.json({
                 success: true,
                 message: "Already User Verified"
-            },{status:200})
+            },{status:201})
         }
 
         const isCodeValid = user.verifyCode === code ; 
@@ -32,14 +32,14 @@ export async function POST(request: Request){
             return Response.json({
                 success: false,
                 message: "Invalid Code"
-            },{status:400})
+            },{status:401})
         }
 
         if(!isCodeNotExpired){
             return Response.json({
                 success: false,
                 message: "Code Expired, Signup again to get new code"
-            },{status:400})
+            },{status:402})
         }
 
         if(isCodeValid && isCodeNotExpired){
