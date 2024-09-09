@@ -57,7 +57,7 @@ export default function VerificationEmail({
               </Row>
               <Row>
                 <Button
-                  href={`https://lukka-chhuppi.web3ngineer.in/verify?username=${username}&otp=${otp}`}
+                  href={`https://lukka-chhuppi.web3ngineer.in/verify-code?username=${username}&otp=${otp}`}
                   className="box-border rounded-[8px] bg-indigo-600 px-[20px] py-[12px] text-center font-semibold text-white"
                 >
                   Verify here
