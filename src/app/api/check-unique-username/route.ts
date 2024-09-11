@@ -2,6 +2,7 @@ import { dbConnect } from "@/lib/dbConnect";
 import { z } from 'zod';
 import UserModel from "@/model/user.model";
 import { usernameValidation } from "@/Schemas/signUpSchema";
+import { NextRequest } from "next/server";
 
 
 
@@ -9,7 +10,7 @@ const UsernameQuerySchema = z.object({
     username: usernameValidation
 })
 
-export async function GET(request: Request){
+export async function GET(request: NextRequest){
 
     // if(request.method !== 'GET'){
     //     Response.json({
@@ -20,13 +21,18 @@ export async function GET(request: Request){
 
     await dbConnect();
     try {
-        const { searchParams } = new URL(request.url);  // Get the query params in the url
         // localhost:3000/api/check-unique-username?username=test123456789&id=123456789
+        // const { searchParams } = new URL(request.url);  // Get the query params in the url
+
+        const url = request.nextUrl;
         const queryParam = {
-            username: searchParams.get('username')
+            username: url.searchParams.get('username')
         }
+        
         // validate with zod
         const result =  UsernameQuerySchema.safeParse(queryParam) 
+
+
         // console.log(result)
 
         if(!result.success){
