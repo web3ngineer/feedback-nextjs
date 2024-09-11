@@ -1,3 +1,4 @@
+
 import { dbConnect } from "@/lib/dbConnect";
 import { z } from 'zod';
 import UserModel from "@/model/user.model";
@@ -25,10 +26,11 @@ export async function GET(request: NextRequest){
         // const { searchParams } = new URL(request.url);  // Get the query params in the url
 
         const url = request.nextUrl;
+        const searchParams = new URLSearchParams(url.search);
         const queryParam = {
-            username: url.searchParams.get('username')
+            username: searchParams.get('username')
         }
-        
+
         // validate with zod
         const result =  UsernameQuerySchema.safeParse(queryParam) 
 

@@ -9,7 +9,9 @@ export const config = {
         '/sign-in',
         '/sign-up',
         '/dashboard/:path*',
-        '/verify/:path*',
+        '/verify-email/:path*',
+        '/forgot-password/:path*',
+        '/verify-code/:path*'
     ],
 }
 
@@ -22,9 +24,11 @@ export async function middleware(request: NextRequest) {
 
     if(token && 
         (
-            url.pathname.startsWith('/sign-in') || 
-            url.pathname.startsWith('/sign-up') ||
-            url.pathname.startsWith('/verify')  ||
+            url.pathname.startsWith('/sign-in')      || 
+            url.pathname.startsWith('/sign-up')      ||
+            url.pathname.startsWith('/verify-email') ||
+            url.pathname.startsWith('/verify-code')  ||
+            url.pathname.startsWith('/forgot-password') ||
             url.pathname === '/'
         )
     ){
