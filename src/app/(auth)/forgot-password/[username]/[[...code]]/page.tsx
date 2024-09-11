@@ -79,10 +79,10 @@ function VerifyPasswordCode() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[580px] md:min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <div className="flex justify-center items-center min-h-[580px] md:min-h-screen pt-20 bg-gray-100">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <div className="text-center">
-          <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl mb-6">
+          <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl mb-4">
             Change Password
           </h1>
           <p className="mb-4">
@@ -90,7 +90,7 @@ function VerifyPasswordCode() {
           </p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             {!code && (
               <FormField
                 control={form.control}
@@ -101,7 +101,7 @@ function VerifyPasswordCode() {
                     <FormControl>
                       <Input {...field} placeholder="Code" />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className='text-xs' />
                   </FormItem>
                 )}
               />
@@ -115,7 +115,7 @@ function VerifyPasswordCode() {
                   <FormControl>
                     <Input {...field} placeholder="Password" type="password"/>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-xs' />
                 </FormItem>
               )}
             />
@@ -128,7 +128,7 @@ function VerifyPasswordCode() {
                   <FormControl>
                     <Input {...field} placeholder="Confirm Password" type="password" />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-xs' />
                 </FormItem>
               )}
             />

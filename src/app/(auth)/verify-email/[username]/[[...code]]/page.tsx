@@ -103,9 +103,9 @@ function VerifyAccount() {
 
   return (
     <div className="flex justify-center items-center min-h-[580px] md:min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <div className="text-center">
-          <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl mb-6">
+          <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl mb-4">
             Verify Your Email
           </h1>
           <p className="mb-4">
@@ -113,7 +113,7 @@ function VerifyAccount() {
           </p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="code"
@@ -123,7 +123,7 @@ function VerifyAccount() {
                   <FormControl>
                     <Input {...field} placeholder="Code" />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-xs'/>
                 </FormItem>
               )}
             />

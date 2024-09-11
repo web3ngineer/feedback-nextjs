@@ -100,16 +100,16 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <div className="flex justify-center items-center min-h-screen pt-20 bg-gray-100">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
+          <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl mb-4">
             Join Mystry App Lukka Chhuppi
           </h1>
           <p className="mb-4">Sign up to start your anonymous feedback</p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="username"
@@ -127,7 +127,7 @@ const SignUpPage = () => {
                     />
                   </FormControl>
                   {isCheckingUsername && (
-                    <Loader2 className="w-2 h-2 mr-2 animate-spin" />
+                    <Loader2 className="w-3 h-3 mr-2 animate-spin" />
                   )}
                   {username && (
                     <p
@@ -140,7 +140,7 @@ const SignUpPage = () => {
                       {usernameMessage}
                     </p>
                   )}
-                  <FormMessage />
+                  <FormMessage className='text-xs'/>
                 </FormItem>
               )}
             />
@@ -153,7 +153,7 @@ const SignUpPage = () => {
                   <FormControl>
                     <Input {...field} placeholder="Your email" />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-xs' />
                 </FormItem>
               )}
             />
@@ -170,7 +170,7 @@ const SignUpPage = () => {
                       type="password"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-xs' />
                 </FormItem>
               )}
             />
@@ -188,8 +188,8 @@ const SignUpPage = () => {
             </Button>
           </form>
         </Form>
-        <div className="mt-6 flex flex-col justify-center items-center">
-          <p className="p-2 -m-5 bg-white w-8 z-10 text-gray-500">or</p>
+        <div className="flex flex-col justify-center items-center">
+          <p className="px-2 -m-3 bg-white w-8 z-10 text-black">or</p>
           <Separator />
         </div>
         <div className="grid sm:grid-cols-2 gap-y-3 justify-center items-center sm:gap-x-3">
@@ -215,7 +215,7 @@ const SignUpPage = () => {
           </Button>
         </div>
         <div className="text-center mt-4">
-          <p>
+          <p className="text-sm font-semibold">
             Already have an account?{" "}
             <Link href="/sign-in" className="text-blue-600 hover:text-blue-800">
               Sign in

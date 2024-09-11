@@ -93,12 +93,12 @@ export default function SendMessage() {
   };
 
   return (
-    <div className="container mx-auto my-8 p-6 bg-white rounded max-w-4xl">
-      <h1 className="text-4xl font-bold mb-6 text-center">
+    <div className="container mx-auto pt-40 md:pt-24 bg-white rounded max-w-4xl">
+      <h1 className="text-4xl font-bold mb-4 text-center">
         Public Profile Link
       </h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="content"
@@ -112,7 +112,7 @@ export default function SendMessage() {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className='text-xs' />
               </FormItem>
             )}
           />
@@ -131,8 +131,8 @@ export default function SendMessage() {
         </form>
       </Form>
 
-      <div className="space-y-4 my-8">
-        <div className="space-y-2">
+      <div className="space-y-4">
+        <div>
           {isSuggestLoading ? (
             <Button disabled>
               Generating 
@@ -161,7 +161,7 @@ export default function SendMessage() {
                 <Button
                   key={index}
                   variant="outline"
-                  className="mb-2"
+                  className="mb-2 h-auto min-h-[40px] whitespace-normal break-words"
                   onClick={() => handleMessageClick(message)}
                 >
                   {message}

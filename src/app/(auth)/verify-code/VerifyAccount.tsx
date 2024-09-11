@@ -84,8 +84,8 @@ function VerifyAccountPage() {
 
   return (
     <div className="flex flex-col gap-4 justify-center items-center min-h-[580px] md:min-h-screen bg-gray-100">
-      <div className="flex flex-col justify-center items-center bg-white p-6 rounded-lg">
-        <h1 className="text-2xl text-purple-800 font-bold mb-4">
+      <div className="flex flex-col justify-center items-center bg-white p-6 rounded-md">
+        <h1 className="text-3xl text-black font-bold mb-4">
           Verify Account
         </h1>
         {isSubmitting ? (
@@ -93,15 +93,15 @@ function VerifyAccountPage() {
             Verifying OTP... <Loader2 className="animate-spin" />
           </div>
         ) : (
-          <p className="text-2xl text-gray-400">{message}</p>
+          <p className=" text-gray-400">{message}</p>
         )}
       </div>
       {message && (
         <Link
-          href={"/"}
+          href={"/sign-in"}
           className="bg-white px-2 font-semibold py-1 text-xs rounded-lg"
         >
-          Go to Home Page →
+          Go to Login Page →
         </Link>
       )}
     </div>

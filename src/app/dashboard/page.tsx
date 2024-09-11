@@ -152,7 +152,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="my-8 mr-4 md:mx-8 lg:mx-auto md:p-6 bg-white rounded w-full max-w-6xl">
+    <div className="pt-40 md:pt-28 sm:mx-4 lg:mx-8 xl:mx-auto bg-white w-full max-w-6xl">
       <div className='flex flex-col gap-2 mb-4 sm:justify-between sm:flex-row'>
         <h1 className="text-3xl font-bold">User Dashboard</h1>
         <DeleteUser handleDeleteUser={handleDeleteUserConfirm} />

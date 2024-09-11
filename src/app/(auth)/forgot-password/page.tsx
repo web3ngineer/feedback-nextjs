@@ -68,28 +68,29 @@ function ForgetPassword() {
 
   return (
     <div className="flex justify-center items-center min-h-[580px] md:min-h-screen bg-gray-100">
-    <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
       <div className="text-center">
-        <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl mb-6">
+        <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl mb-4">
           Forget Password
         </h1>
-        <p className="mb-4">Enter your email which is registered on Lukka-Chhuppi</p>
+        <p>Enter your email which is registered on</p>
+        <p>Lukka Chhuppi</p>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Registered Email:</FormLabel>
+                <FormLabel>Registered Email</FormLabel>
                 <FormControl>
                   <Input 
                     {...field} 
-                    placeholder="example@mail.com"
+                    placeholder="example@gmail.com"
                   />
                 </FormControl>
-                <FormMessage/>
+                <FormMessage className='text-xs'/>
               </FormItem>
             )}
           />
