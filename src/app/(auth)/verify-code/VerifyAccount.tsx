@@ -83,7 +83,7 @@ function VerifyAccountPage() {
   }, [username, otp, router, verifyCode]);
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center min-h-[580px] md:min-h-screen bg-gray-100">
+    <div className="flex flex-col gap-4 justify-center items-center min-h-[720px] md:min-h-screen bg-gray-100">
       <div className="flex flex-col justify-center items-center bg-white p-6 rounded-md">
         <h1 className="text-3xl text-black font-bold mb-4">
           Verify Account
@@ -98,10 +98,10 @@ function VerifyAccountPage() {
       </div>
       {message && (
         <Link
-          href={"/sign-in"}
+          href={"/"}
           className="bg-white px-2 font-semibold py-1 text-xs rounded-lg"
         >
-          Go to Login Page →
+          Go to Home Page →
         </Link>
       )}
     </div>

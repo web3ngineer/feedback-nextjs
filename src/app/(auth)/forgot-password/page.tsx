@@ -50,7 +50,7 @@ function ForgetPassword() {
         title: 'Success',
         description: `${response.data.message}`,
       })
-      router.push(`/forget-password/${response.data.user.username}`);
+      router.push(`/forgot-password/${response.data.user.username}`);
       setIsSubmitting(false)
 
     } catch (error) {
@@ -67,7 +67,7 @@ function ForgetPassword() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-[580px] md:min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-[720px] md:min-h-screen bg-gray-100">
     <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
       <div className="text-center">
         <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl mb-4">

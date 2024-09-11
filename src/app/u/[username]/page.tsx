@@ -134,7 +134,10 @@ export default function SendMessage() {
       <div className="space-y-4">
         <div>
           {isSuggestLoading ? (
-            <Button disabled>
+            <Button 
+              disabled 
+              className="my-4"
+            >
               Generating 
               <Loader2 className="m-2 h-4 w-4 animate-spin" />
             </Button>
@@ -172,7 +175,7 @@ export default function SendMessage() {
         </Card>
       </div>
       <Separator className="my-6" />
-      <div className="text-center">
+      <div className="text-center mb-4">
         <div className="mb-4">Get Your Message Board</div>
         <Link href={"/sign-up"}>
           <Button>Create Your Account</Button>
