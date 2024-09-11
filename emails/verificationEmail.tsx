@@ -47,10 +47,12 @@ export default function VerificationEmail({
                   resgistration:
                 </Text>
               </Row>
-              <Row className="flex flex-col">
+              <Row>
                 <Text>
                   <strong>Here&apos;s your verification code</strong>
                 </Text>
+              </Row>
+              <Row>
                 <Text className="text-[25px]">
                   <strong>{otp}</strong>
                 </Text>

@@ -17,11 +17,11 @@ import axios, { AxiosError } from 'axios';
 import { useParams, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { verifySchema } from '@/Schemas/verifySchema';
+import { verifyEmailSchema } from '@/Schemas/verifySchema';
 import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
 
-function VerifyAccount() {
+function ForgetPassword() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
@@ -29,12 +29,12 @@ function VerifyAccount() {
 
   const params = useParams<{username:string}>()
 
-  type VerifyFormData = z.infer<typeof verifySchema>;
+  type VerifyFormData = z.infer<typeof verifyEmailSchema>;
 
   const form = useForm<VerifyFormData>({
-    resolver: zodResolver(verifySchema),
+    resolver: zodResolver(verifyEmailSchema),
     defaultValues: {
-      code:'',
+      email:'',
     },
   });
 
@@ -42,24 +42,23 @@ function VerifyAccount() {
     // console.log(data)
     setIsSubmitting(true)
     try {
-      const response = await axios.post('/api/verify-code', {
-        username: params.username,
-        code: data.code,
+      const response = await axios.post('/api/forget-password', {
+        email: data.email,
       })
+      console.log(response.data)
       toast({
         title: 'Success',
         description: `${response.data.message}`,
       })
-      // router.push("/login");
+      router.push(`/forget-password/${response.data.user.username}`);
       setIsSubmitting(false)
-      router.replace(`/sign-in`)
 
     } catch (error) {
       console.error("Failed to verify user", error)
       const AxiosError = error as AxiosError<ApiResponse>
       let errorMessage = AxiosError?.response?.data?.message ?? "An error occured. Please try again."
       toast({
-        title:"Verification failed",
+        title:"Failed to Send Otp",
         description: errorMessage,
         variant:"destructive"
       })
@@ -68,26 +67,26 @@ function VerifyAccount() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-[580px] md:min-h-screen bg-gray-100">
     <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
       <div className="text-center">
         <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl mb-6">
-          Verify Your Email
+          Forget Password
         </h1>
-        <p className="mb-4">Enter your verification code sent on your email</p>
+        <p className="mb-4">Enter your email which is registered on Lukka-Chhuppi</p>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
             control={form.control}
-            name="code"
+            name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Verification Code</FormLabel>
+                <FormLabel>Registered Email:</FormLabel>
                 <FormControl>
                   <Input 
                     {...field} 
-                    placeholder="Code"
+                    placeholder="example@mail.com"
                   />
                 </FormControl>
                 <FormMessage/>
@@ -103,7 +102,7 @@ function VerifyAccount() {
                   </div>
                   {'loading...'}
                 </div>
-              ) : ('Verify')
+              ) : ('Send Otp')
             }
           </Button>
         </form>
@@ -113,4 +112,4 @@ function VerifyAccount() {
   )
 }
 
-export default VerifyAccount;
+export default ForgetPassword;

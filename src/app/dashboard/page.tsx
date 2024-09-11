@@ -1,5 +1,4 @@
 'use client'
-
 import {MessageCard} from '@/components/MessageCard';
 import SkeletonLoader from '@/components/SkeletonLoader';
 import { Button } from '@/components/ui/button';
@@ -83,10 +82,12 @@ function Dashboard() {
       setIsLoading(false)
       setIsSwitchLoading(false)
     }
-  },[setIsLoading, setMessages])
+  },[setIsLoading, setMessages, toast])
 
   useEffect( ()=>{
-    if(!session || !session.user) return ;
+    if (!session || !session.user){
+      return ;
+    }
     fetchMessages()
     fetchAcceptMessage()
   },[session, setValue, fetchAcceptMessage, fetchMessages])

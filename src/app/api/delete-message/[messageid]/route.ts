@@ -4,7 +4,6 @@ import { dbConnect } from "@/lib/dbConnect";
 import UserModel from "@/model/user.model";
 import { User } from "next-auth";
 import { NextResponse } from "next/server";
-import mongoose from "mongoose";
 
 export async function DELETE(request: Request, {params}:{ params:{messageid:string}}) {
 

@@ -27,7 +27,7 @@ export async function POST(request: NextRequest){
     //     );
     // }
 
-    dbConnect();
+    await dbConnect();
 
     const {username, content} = await request.json()
     try {

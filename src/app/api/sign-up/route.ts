@@ -1,7 +1,7 @@
 import { dbConnect } from "@/lib/dbConnect";
 import UserModel from "@/model/user.model";
 import brcrypt from 'bcryptjs';
-import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
+import { sendEmail } from "@/helpers/sendEmail";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req:NextRequest, res:NextResponse){
@@ -11,7 +11,7 @@ export async function POST(req:NextRequest, res:NextResponse){
 
         const existingUserVerifiedByUsername = await UserModel.findOne({username, isVerified:true})
         if (existingUserVerifiedByUsername){
-            return Response.json({
+            return NextResponse.json({
                 success:false,
                 message: `This ${username} username has already been taken.`
             },{status:400})
@@ -22,7 +22,7 @@ export async function POST(req:NextRequest, res:NextResponse){
         const exstingUserByEmail = await UserModel.findOne({email})
         if(exstingUserByEmail){ 
             if(exstingUserByEmail.isVerified){
-                return Response.json(
+                return NextResponse.json(
                     {
                         success: false, 
                         message:"User Exists with the given email"
@@ -54,28 +54,29 @@ export async function POST(req:NextRequest, res:NextResponse){
         };
 
         //sendVerification email
-        const emailResponse = await sendVerificationEmail(email, username, verifyCode);
+        const verificationFor = "verify-email"
+        const emailResponse = await sendEmail(verificationFor,email, username, verifyCode);
         console.log(emailResponse);
 
         if(!emailResponse.success){
-            return Response.json({
+            return NextResponse.json({
                 success:false,
                 message:`Failed to send verification mail due to ${emailResponse.message}`
             },{status:500})
         }
 
-        return Response.json(
+        return NextResponse.json(
             {
                 success: true, 
-                message:"Registration Successful"
+                message:"Registration Successfull"
             },{status:200})
 
     } catch (error) {
         console.error("Error registering User",error);
-        return Response.json(
+        return NextResponse.json(
             {
                 success: false, 
-                message:"Error registering user"
+                message:"Error registering user "
             },
             {
                 status:500
