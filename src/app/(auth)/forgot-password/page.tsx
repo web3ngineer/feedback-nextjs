@@ -1,5 +1,4 @@
 'use client';
-
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -20,6 +19,8 @@ import * as z from 'zod';
 import { verifyEmailSchema } from '@/Schemas/verifySchema';
 import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { User } from 'next-auth';
 
 function ForgetPassword() {
 
@@ -27,14 +28,16 @@ function ForgetPassword() {
   const router = useRouter()
   const {toast} = useToast()
 
-  const params = useParams<{username:string}>()
+  const { data: session } = useSession();
+
+  const user = session?.user as User
 
   type VerifyFormData = z.infer<typeof verifyEmailSchema>;
 
   const form = useForm<VerifyFormData>({
     resolver: zodResolver(verifyEmailSchema),
     defaultValues: {
-      email:'',
+      email: session?.user ? user?.email : "",
     },
   });
 
