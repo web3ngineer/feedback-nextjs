@@ -117,7 +117,7 @@ function Dashboard() {
     }
   };
 
-  if (!session?.user) {
+  if (!session || !session?.user) {
     return (
       <div className="container">
         <SkeletonDashboardLoader />
