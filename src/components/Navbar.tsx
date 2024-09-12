@@ -2,15 +2,14 @@
 import React from 'react'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
-import { User, Session } from 'next-auth'
+import { User } from 'next-auth'
 import { Button } from './ui/button'
 import Image from 'next/image'
 import Logo from '../../public/android-chrome-512x512.png'
 
 const Navbar = () => {
-    const { data: session } = useSession()
-
-    const user: User = session?.user as User
+    const { data:session } = useSession()
+    const user = session?.user as User
 
   return (
     <nav className='p-2 md:p-3 shadow-md w-full fixed bg-white z-10'>

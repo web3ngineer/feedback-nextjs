@@ -76,7 +76,7 @@ export async function POST(req:NextRequest, res:NextResponse){
         return NextResponse.json(
             {
                 success: false, 
-                message:"Error registering user "
+                message:"Error! registering user"
             },
             {
                 status:500

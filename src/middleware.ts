@@ -11,7 +11,8 @@ export const config = {
         '/dashboard/:path*',
         '/verify-email/:path*',
         '/forgot-password/:path*',
-        '/verify-code/:path*'
+        '/verify-code/:path*',
+        '/edit-profile/:path*',
     ],
 }
 
@@ -28,15 +29,22 @@ export async function middleware(request: NextRequest) {
             url.pathname.startsWith('/sign-up')      ||
             url.pathname.startsWith('/verify-email') ||
             url.pathname.startsWith('/verify-code')  ||
-            url.pathname.startsWith('/forgot-password') ||
+            // url.pathname.startsWith('/forgot-password') ||
             url.pathname === '/'
         )
     ){
         return NextResponse.redirect(new URL('/dashboard', request.url))
     }
-    if(!token && url.pathname.startsWith('/dashboard')){
+    if(!token && 
+        (
+            url.pathname.startsWith('/edit-profile') ||
+            url.pathname.startsWith('/dashboard')
+        )
+    ){
         return NextResponse.redirect(new URL("/sign-in", request.url))
     }
+
+    
 
     return NextResponse.next()
     // return NextResponse.redirect(new URL('/home', request.url))

@@ -100,7 +100,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen  pt-28 md:pt-20 bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen pt-28 md:pt-20 bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl mb-4">
@@ -140,7 +140,7 @@ const SignUpPage = () => {
                       {usernameMessage}
                     </p>
                   )}
-                  <FormMessage className='text-xs'/>
+                  {!username && <FormMessage className='text-xs'/>}
                 </FormItem>
               )}
             />

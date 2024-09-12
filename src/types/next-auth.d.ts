@@ -4,12 +4,14 @@ import { DefaultSession } from 'next-auth';
 declare module 'next-auth' {
     interface User{
         _id?: string,
+        email?: string,
         isVerified?: boolean,
         isAcceptingMessage?: boolean,
         username?: string,
     }
     interface Token{
         _id?: string,
+        email?: string,
         isVerified?: boolean,
         isAcceptingMessage?: boolean,
         username?: string,
@@ -17,6 +19,7 @@ declare module 'next-auth' {
     interface Session{
         user:{
             _id?: string,
+            email?: string,
             isVerified?: boolean,
             isAcceptingMessage?: boolean,
             username?: string,

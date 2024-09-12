@@ -73,7 +73,6 @@ export const authOptions: NextAuthOptions = {
                     const existingUser = await UserModel.findOne({ email: user.email?.toString()});
                     if(existingUser && !existingUser.isVerified){
                         // console.log('existingUser Verification')
-
                         existingUser.isVerified=true;
                         const updatedUser = await existingUser.save();
                         // console.log("updatedUsed",updatedUser)
@@ -81,6 +80,7 @@ export const authOptions: NextAuthOptions = {
                             user._id = updatedUser._id?.toString();
                             user.isVerified = updatedUser.isVerified;
                             user.username = updatedUser.username;
+                            user.email= updatedUser.email;
                             user.isAcceptingMessage = updatedUser.isAcceptingMessage;
                         }
 
@@ -92,14 +92,23 @@ export const authOptions: NextAuthOptions = {
                             user._id = existingUser._id?.toString();
                             user.isVerified = existingUser.isVerified;
                             user.username = existingUser.username;
+                            user.email= existingUser.email;
                             user.isAcceptingMessage = existingUser.isAcceptingMessage;
                         }
                         return true;  
 
                     }else {
-                        const password = Math.random().toString(36).substr(2, 12);
-                        const username = user.email?.toString().split("@")[0]; 
+                      
+                        let username = user.email?.toString().split("@")[0]; 
+
+                        const existingUsername = await UserModel.findOne({username});
+                        if(existingUsername){
+                            username = `${username}${Math.floor(Math.random() * 1000)}`
+                        }
+
+                        const password = Math.random().toString(36).substring(2, 12);
                         const hashedPassword = await bcrypt.hash(password, 10); 
+                        
                         const newUser = await UserModel.create({
                             email:user.email?.toString(),
                             username,
@@ -111,6 +120,7 @@ export const authOptions: NextAuthOptions = {
                             user._id = newUser._id?.toString();
                             user.isVerified = newUser.isVerified;
                             user.username = newUser.username;
+                            user.email= newUser.email;
                             user.isAcceptingMessage = newUser.isAcceptingMessage;
                         }
                         return true;  
@@ -130,6 +140,7 @@ export const authOptions: NextAuthOptions = {
                 token._id = user._id?.toString();
                 token.isVerified = user.isVerified;
                 token.username = user.username;
+                token.email = user.email;
                 token.isAcceptingMessage = user.isAcceptingMessage;
             }
             // console.log("Token:",token)
@@ -140,6 +151,7 @@ export const authOptions: NextAuthOptions = {
                 session.user._id = token._id?.toString();
                 session.user.isVerified = token.isVerified;
                 session.user.username = token.username;
+                session.user.email = token.email?.toString();
                 session.user.isAcceptingMessage = token.isAcceptingMessage;
             }
             return session;

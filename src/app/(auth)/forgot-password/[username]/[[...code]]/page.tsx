@@ -16,7 +16,7 @@ import axios, { AxiosError } from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { changePasswordSchema } from "@/Schemas/changePasswordSchema";
+import { forgetPasswordSchema } from "@/Schemas/changePasswordSchema";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
@@ -33,10 +33,10 @@ function VerifyPasswordCode() {
   // console.log(code)
   // console.log(typeof(code[0]));
 
-  type VerifyFormData = z.infer<typeof changePasswordSchema>;
+  type VerifyFormData = z.infer<typeof forgetPasswordSchema>;
 
   const form = useForm<VerifyFormData>({
-    resolver: zodResolver(changePasswordSchema),
+    resolver: zodResolver(forgetPasswordSchema),
     defaultValues: {
       code: code ? code[0] : "",
       password1: "",

@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   
   await dbConnect();
   try {
-    const { username, password1, password2, code } = await request.json();
+    const { username, password, password1, password2, code } = await request.json();
     const session = await getServerSession(authOptions);
     const sessionUser = session?.user as User;
 
@@ -43,6 +43,17 @@ export async function POST(request: Request) {
           {
             success: false,
             message: "User not verified",
+          },
+          { status: 400 }
+        );
+      }
+
+      const existingPassword = await bcrypt.compare(password1, user.password)
+      if (existingPassword) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "New password cannot be same as old password",
           },
           { status: 400 }
         );
@@ -134,6 +145,31 @@ export async function POST(request: Request) {
         );
       }
 
+      const existingPassword = await bcrypt.compare(password1, user.password)
+
+      if (existingPassword) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "New password cannot be same as old password",
+          },
+          { status: 400 }
+        );
+      }
+
+      const isPasswordCorrect = await bcrypt.compare(password, user.password)
+
+      if (!isPasswordCorrect) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "InCorrect Password",
+          },
+          { status: 401 }
+        );
+      }
+
+      // If password is correct
       const hashedPassword = await bcrypt.hash(password1, 10);
 
       const response = await UserModel.findOneAndUpdate(

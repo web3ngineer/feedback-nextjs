@@ -17,14 +17,15 @@ import { Button } from '@/components/ui/button';
 
 type DeleteUserProps = {
     handleDeleteUser:() => void;
+    toggleDelete: boolean;
   };
 
-export function DeleteUser({handleDeleteUser}:DeleteUserProps) {
+export function DeleteUser({handleDeleteUser, toggleDelete}:DeleteUserProps) {
   return (
         <div>
             <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant='destructive' className='px-3'>
+              <Button variant='destructive' className='px-3' disabled={toggleDelete}>
                 <span className='pr-2'>Delete Profile</span>
                 <Trash2 className="w-4 h-4" />
               </Button>
