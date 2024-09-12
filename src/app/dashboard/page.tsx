@@ -159,7 +159,7 @@ function Dashboard() {
               type="text"
               value={profileUrl}
               disabled
-              className="input input-bordered rounded-md w-full p-2 bg-slate-50 shadow-inner border-gray-300"
+              className="input input-bordered rounded-md w-full p-2 pr-14 bg-slate-50 shadow-inner border-gray-300"
             />
             <Button
               onClick={copyToClipboard}
