@@ -106,13 +106,13 @@ export default function SignInForm() {
             <Button className='w-full' type="submit">Sign In</Button>
           </form>
         </Form>
-        <div className='flex justify-end'>
-          <Link href="/forgot-password" className="text-blue-600 hover:text-blue-800 text-sm font-semibold -my-4">
+        <div className='flex justify-center items-center relative'>
+          <Link href="/forgot-password" className="text-blue-600 hover:text-blue-800 text-sm font-semibold absolute right-1 ">
             Forget Password?
           </Link>
         </div>
-        <div className='flex flex-col justify-center items-center'>
-            <p className='px-2 -m-3 bg-white w-8 z-10 text-black'>or</p>
+        <div className='flex flex-col justify-center items-center relative'>
+            <p className='px-2 bg-white w-8 z-10 text-black absolute'>or</p>
             <Separator/>
         </div>
         <div className='grid sm:grid-cols-2 gap-y-3 justify-center items-center sm:gap-x-3'>

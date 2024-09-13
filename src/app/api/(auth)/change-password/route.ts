@@ -23,10 +23,18 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+    
+    if(!password && !code){
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid Request",
+        },
+        { status: 400 }
+      );
+    }
 
-    // If user is not logged in
-    if (!session || !session.user) {
-      const user = await UserModel.findOne({ username });
+    const user = await UserModel.findOne({ username });
 
       if (!user) {
         return NextResponse.json(
@@ -59,6 +67,8 @@ export async function POST(request: Request) {
         );
       }
 
+    // If user change-password by using code
+    if (code && !password) {
       const isCodeValid = user.verifyCode === code;
       const isCodeNotExpired = user.verifyCodeExpiry > new Date();
 
@@ -121,42 +131,8 @@ export async function POST(request: Request) {
       }
     }
 
-    // If the user is logged in
-    if (session && session.user) {
-      const user = await UserModel.findById(sessionUser._id);
-      
-      if (!user) {
-        return NextResponse.json(
-          {
-            success: false,
-            message: "User not found",
-          },
-          { status: 400 }
-        );
-      }
-
-      if (!user.isVerified) {
-        return NextResponse.json(
-          {
-            success: false,
-            message: "User not verified",
-          },
-          { status: 400 }
-        );
-      }
-
-      const existingPassword = await bcrypt.compare(password1, user.password)
-
-      if (existingPassword) {
-        return NextResponse.json(
-          {
-            success: false,
-            message: "New password cannot be same as old password",
-          },
-          { status: 400 }
-        );
-      }
-
+    // If the user change-password by current-password
+    if (!code && password) {
       const isPasswordCorrect = await bcrypt.compare(password, user.password)
 
       if (!isPasswordCorrect) {
