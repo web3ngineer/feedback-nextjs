@@ -14,12 +14,12 @@ const Navbar = () => {
   return (
     <nav className='p-2 md:p-3 shadow-md w-full fixed bg-white z-10'>
         <div className='container mx-auto flex flex-col gap-2 md:flex-row justify-between items-center'>
-            <a href="/">
+            <Link href="/">
                 <div className='flex'>
                         <Image src={Logo} alt="Logo" width={45} height={45}/>
                         <p className='flex justify-center items-center p-2 text-xl tracking-tight text-purple-800 font-serif font-bold'>Lukka Chhuppi</p>
                 </div>
-            </a>
+            </Link>
             {
                 session ? (
                     <>

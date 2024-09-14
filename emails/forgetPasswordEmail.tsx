@@ -35,9 +35,9 @@ import {
             <Container className="text-center">
               <Section>
                 <Row>
-                  <Text className="text-[20px]">
+                  <Text className="text-xl">
                     Hey <strong className="text-blue-500">{username}</strong>,
-                    Verify your verification code to change Password
+                    Verify your code to change Password
                   </Text>
                 </Row>
                 <Row>
