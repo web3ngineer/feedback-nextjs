@@ -9,7 +9,7 @@ export async function POST(request: Request){
         const { username, code } = await request.json()
 
         // const decodedUsername = decodeURIComponent(username) // To handle URL encoded characters in the username
-        const user = await UserModel.findOne({username:username})
+        const user = await UserModel.findOne({username})
         // console.log(user)
 
         if(!user){
@@ -50,7 +50,7 @@ export async function POST(request: Request){
             // await user.save()
 
             const response = await UserModel.findOneAndUpdate(
-                { decodedUsername },
+                { username },
                 { 
                     $unset: { 
                         verifyCode:"",
