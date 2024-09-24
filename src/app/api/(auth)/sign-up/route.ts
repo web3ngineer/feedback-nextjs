@@ -19,9 +19,9 @@ export async function POST(req:NextRequest, res:NextResponse){
 
         const verifyCode = Math.floor(100000 + Math.random()*900000).toString()
 
-        const exstingUserByEmail = await UserModel.findOne({email})
-        if(exstingUserByEmail){ 
-            if(exstingUserByEmail.isVerified){
+        const existingUserByEmail = await UserModel.findOne({email})
+        if(existingUserByEmail){ 
+            if(existingUserByEmail.isVerified){
                 return NextResponse.json(
                     {
                         success: false, 
@@ -29,10 +29,11 @@ export async function POST(req:NextRequest, res:NextResponse){
                     },{status:400})
             }else{
                 const hashedPassword = await brcrypt.hash(password, 10)
-                exstingUserByEmail.password = hashedPassword;
-                exstingUserByEmail.verifyCode = verifyCode;
-                exstingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 60*60*1000);
-                await exstingUserByEmail.save();
+                existingUserByEmail.password = hashedPassword;
+                existingUserByEmail.verifyCode = verifyCode;
+                existingUserByEmail.username = username;
+                existingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 60*60*1000);
+                await existingUserByEmail.save();
             }
 
         }else{
