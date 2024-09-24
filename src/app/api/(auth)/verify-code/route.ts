@@ -8,8 +8,8 @@ export async function POST(request: Request){
     try {
         const { username, code } = await request.json()
 
-        const decodedUsername = decodeURIComponent(username) // To handle URL encoded characters in the username
-        const user = await UserModel.findOne({username:decodedUsername})
+        // const decodedUsername = decodeURIComponent(username) // To handle URL encoded characters in the username
+        const user = await UserModel.findOne({username:username})
         // console.log(user)
 
         if(!user){
