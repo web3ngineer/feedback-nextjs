@@ -51,7 +51,7 @@ export async function POST(request: Request){
             // await user.save()
 
             const response = await UserModel.findOneAndUpdate(
-                { decodedUsername },
+                { username:decodedUsername },
                 { 
                     $unset: { 
                         verifyCode:"",
