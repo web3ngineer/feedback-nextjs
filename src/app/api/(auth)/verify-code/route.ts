@@ -9,9 +9,9 @@ export async function POST(request: Request){
         const { username, code } = await request.json()
 
         const decodedUsername = decodeURIComponent(username) // To handle URL encoded characters in the username
-        console.log(decodedUsername)
+        // console.log(decodedUsername)
         const user = await UserModel.findOne({username:decodedUsername})
-        console.log(user)
+        // console.log(user)
 
         if(!user){
             return NextResponse.json({
@@ -23,7 +23,7 @@ export async function POST(request: Request){
         if(user.isVerified){
             return NextResponse.json({
                 success: true,
-                message: "Already User Verified"
+                message: "User Already Verified"
             },{status:201})
         }
 
